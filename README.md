@@ -52,20 +52,6 @@ landing-page/
 └── gimnasio/         (+ TAILWIND.md, guía de Tailwind)
 ```
 
-### Por qué separar HTML, CSS y JS
-
-Es el principio de **separación de responsabilidades**:
-
-- **HTML** = *qué hay* en la página (títulos, formularios, secciones).
-- **CSS** = *cómo se ve* (colores, tamaños, disposición).
-- **JS** = *qué hace* (reaccionar a clics, calcular, guardar datos).
-
-Tenerlos en archivos separados hace que el código sea más fácil de leer, de reutilizar y que el navegador pueda guardar en caché el CSS/JS.
-
-### Por qué cada página se llama `index.html`
-
-Cuando visitás `misitio.com/barberia/`, el servidor busca automáticamente el archivo `index.html` dentro de esa carpeta. Así las URLs quedan limpias, sin `.html` al final.
-
 ---
 
 ## 3. Módulos de JavaScript (`import` / `export`)
