@@ -1,0 +1,9 @@
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+# Carpetas de editores
+.vscode/
+.idea/
+# Carpeta local de Netlify CLI (contiene el ID del sitio)
+.netlify/
+node_modules/

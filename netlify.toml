@@ -1,0 +1,12 @@
+# Configuración de Netlify (se lee automáticamente al hacer deploy)
+[build]
+  # Es un sitio estático: no hay comando de build, se publica la carpeta tal cual
+  publish = "."
+
+# Cabeceras de seguridad básicas para todas las páginas
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

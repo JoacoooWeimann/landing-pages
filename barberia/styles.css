@@ -1,0 +1,67 @@
+/* Variables CSS: cambiando estos valores cambia la paleta de toda la página */
+:root {
+  --gold: #d4af37;
+  --gold-hover: #b5952f;
+  --wa: #25d366;
+  --wa-hover: #1eb856;
+}
+
+html { scroll-behavior: smooth; }
+
+.text-gold { color: var(--gold) !important; }
+.tracking-wider { letter-spacing: 0.1em; }
+
+.btn-gold {
+  background-color: var(--gold);
+  color: #000;
+  font-weight: 700;
+  border: none;
+}
+.btn-gold:hover { background-color: var(--gold-hover); color: #000; }
+
+.btn-wa {
+  background-color: var(--wa);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+}
+.btn-wa:hover { background-color: var(--wa-hover); color: #fff; }
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+}
+
+.navbar-blur {
+  background-color: rgba(18, 18, 18, 0.75);
+  backdrop-filter: blur(8px);
+}
+
+.hero-section {
+  background: radial-gradient(ellipse at top, #2b2b2b, #121212 70%);
+}
+
+.service-card { transition: transform 0.2s, border-color 0.2s; }
+.service-card:hover { transform: translateY(-3px); border-color: var(--gold) !important; }
+
+.map { width: 100%; height: 100%; min-height: 260px; }
+
+/* Botón flotante de WhatsApp fijo abajo a la derecha */
+.wa-float {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--wa);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 1.8rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  transition: transform 0.2s;
+}
+.wa-float:hover { transform: scale(1.1); color: #fff; }

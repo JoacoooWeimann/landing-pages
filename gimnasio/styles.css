@@ -1,0 +1,77 @@
+/* Estilos que Tailwind no resuelve cómodo con clases: se escriben a mano */
+html { scroll-behavior: smooth; }
+
+.hero {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(198, 244, 50, 0.15), transparent 40%),
+    linear-gradient(180deg, #09090b, #111113);
+}
+
+.input {
+  display: block;
+  width: 100%;
+  background: #09090b;
+  border: 1px solid #3f3f46;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: #fff;
+}
+.input:focus { outline: 2px solid #c6f432; border-color: transparent; }
+
+/* Interruptor: el checkbox real está oculto (sr-only) y se dibuja un "switch" */
+.toggle {
+  width: 48px;
+  height: 26px;
+  background: #3f3f46;
+  border-radius: 999px;
+  position: relative;
+  transition: background 0.2s;
+}
+.toggle::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s;
+}
+/* peer: cuando el checkbox anterior está marcado, cambia el switch */
+.peer:checked + .toggle { background: #c6f432; }
+.peer:checked + .toggle::after { transform: translateX(22px); background: #09090b; }
+.peer:focus-visible + .toggle { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* FAQ */
+.faq {
+  background: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+}
+.faq summary {
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: #c6f432; font-size: 1.3rem; line-height: 1; transition: transform 0.2s; }
+.faq[open] summary::after { transform: rotate(45deg); }
+.faq p { color: #a1a1aa; margin: 0.75rem 0 0; }
+
+/* Animación al hacer scroll: JS agrega .visible cuando el elemento entra en pantalla */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* Respetar a quien pidió menos animaciones en su sistema operativo */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}

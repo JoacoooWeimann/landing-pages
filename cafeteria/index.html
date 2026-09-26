@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Café Aroma | Café de especialidad</title>
+  <meta name="description" content="Café Aroma: café de especialidad, pastelería casera y brunch en Palermo. Reservá tu mesa online.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#" class="logo"><i class="fa-solid fa-mug-hot"></i> Café Aroma</a>
+      <span id="openStatus" class="status"></span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Café de especialidad · Palermo</p>
+        <h1>El mejor momento del día empieza con un buen café.</h1>
+        <p class="lead">Granos tostados por nosotros, pastelería casera todos los días y un rincón tranquilo para quedarte.</p>
+        <div class="actions">
+          <a href="#menu" class="btn btn-primary">Ver el menú</a>
+          <a href="#reservas" class="btn btn-ghost">Reservar mesa</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="cup"><i class="fa-solid fa-mug-saucer"></i></div>
+        <div class="badge-rating"><i class="fa-solid fa-star"></i> 4.8 en Google</div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section id="menu" class="container section">
+      <h2 class="section-title">Nuestro menú</h2>
+      <!-- role="tablist" y aria-selected ayudan a lectores de pantalla -->
+      <div id="tabs" class="tabs" role="tablist"></div>
+      <div id="menuList" class="menu-list" role="tabpanel"></div>
+    </section>
+
+    <section class="features">
+      <div class="container features-grid">
+        <div class="feature"><i class="fa-solid fa-seedling"></i><h3>Opciones veganas</h3><p>Leches vegetales sin costo extra.</p></div>
+        <div class="feature"><i class="fa-solid fa-wifi"></i><h3>Wi-Fi rápido</h3><p>Ideal para trabajar un rato.</p></div>
+        <div class="feature"><i class="fa-solid fa-dog"></i><h3>Pet friendly</h3><p>Tu mascota también es bienvenida.</p></div>
+      </div>
+    </section>
+
+    <section id="reservas" class="container section reservas-grid">
+      <div>
+        <h2 class="section-title left">Reservá tu mesa</h2>
+        <p class="muted">Te confirmamos por email en menos de 2 horas. Para grupos de más de 8 personas, escribinos por WhatsApp.</p>
+        <!--
+          Netlify Forms SIN JavaScript: el navegador hace el POST normal
+          y Netlify redirige a la página indicada en "action".
+        -->
+        <form name="reservas" method="POST" action="/cafeteria/gracias.html" data-netlify="true" netlify-honeypot="bot-field" class="form">
+          <input type="hidden" name="form-name" value="reservas">
+          <p hidden><label>No completar: <input name="bot-field"></label></p>
+
+          <label>Nombre<input type="text" name="nombre" required></label>
+          <label>Email<input type="email" name="email" required></label>
+          <div class="form-row">
+            <label>Fecha<input type="date" name="fecha" id="fecha" required></label>
+            <label>Hora
+              <select name="hora" required>
+                <option value="">Elegir</option>
+                <option>09:00</option><option>10:30</option><option>12:00</option>
+                <option>13:30</option><option>16:00</option><option>17:30</option>
+              </select>
+            </label>
+            <label>Personas<input type="number" name="personas" min="1" max="8" value="2" required></label>
+          </div>
+          <label>Comentarios (opcional)<textarea name="comentarios" rows="3" placeholder="Ej: es un cumpleaños, necesito silla para bebé..."></textarea></label>
+          <button type="submit" class="btn btn-primary">Enviar reserva</button>
+        </form>
+      </div>
+
+      <div class="info-card">
+        <iframe class="map"
+          src="https://maps.google.com/maps?q=Plaza%20Serrano%2C%20Palermo%2C%20Buenos%20Aires&output=embed"
+          loading="lazy" title="Mapa de Café Aroma"></iframe>
+        <ul class="info-list">
+          <li><i class="fa-solid fa-location-dot"></i> Honduras 4800, Palermo</li>
+          <li><i class="fa-solid fa-clock"></i> <span>Lun a Vie 8:00–20:00<br>Sáb y Dom 9:00–21:00</span></li>
+          <li><i class="fa-brands fa-whatsapp"></i> <a id="waLink" target="_blank" rel="noopener">+54 9 11 1234-5678</a></li>
+          <li><i class="fa-brands fa-instagram"></i> <a href="https://instagram.com" target="_blank" rel="noopener">@cafe.aroma</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Café Aroma · Demo para comercios · <a href="../">← Volver al portafolio</a></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

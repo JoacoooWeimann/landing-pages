@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORJA Gym | Entrená en serio</title>
+  <meta name="description" content="FORJA Gym: musculación, funcional y clases grupales. Pedí tu clase de prueba gratis.">
+  <!-- Tailwind por CDN: ideal para prototipos. En producción se usa compilado con npm -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Configuración de Tailwind: agregamos colores y fuentes propias
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { lime: { brand: "#c6f432" } },
+          fontFamily: { display: ["Oswald", "sans-serif"] },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-zinc-950 text-zinc-100 font-[Inter] antialiased">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-zinc-950/80 backdrop-blur border-b border-zinc-800">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="#" class="font-display text-2xl tracking-wide">FORJA<span class="text-lime-brand">.</span></a>
+      <nav class="hidden md:flex gap-8 text-sm text-zinc-400">
+        <a href="#planes" class="hover:text-white">Planes</a>
+        <a href="#imc" class="hover:text-white">Calculadora</a>
+        <a href="#faq" class="hover:text-white">Preguntas</a>
+      </nav>
+      <a href="#prueba" class="bg-lime-brand text-zinc-950 font-semibold text-sm px-4 py-2 rounded-full hover:brightness-90">Clase gratis</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 py-24 md:py-32">
+      <p class="text-lime-brand font-semibold uppercase tracking-[0.2em] text-sm mb-4">Abierto 24/7</p>
+      <h1 class="font-display text-5xl md:text-7xl uppercase leading-none max-w-3xl">Tu mejor versión<br>se <span class="text-lime-brand">forja</span> acá.</h1>
+      <p class="text-zinc-400 text-lg mt-6 max-w-xl">Musculación, funcional y clases grupales con profes que te acompañan de verdad. Tu primera clase va por nuestra cuenta.</p>
+      <div class="flex flex-wrap gap-4 mt-10">
+        <a href="#prueba" class="bg-lime-brand text-zinc-950 font-semibold px-6 py-3 rounded-full hover:brightness-90">Reservar clase de prueba</a>
+        <a href="#planes" class="border border-zinc-700 px-6 py-3 rounded-full hover:border-zinc-400">Ver planes</a>
+      </div>
+
+      <!-- Contadores animados: el número final está en data-target -->
+      <div class="grid grid-cols-3 gap-6 mt-20 max-w-xl">
+        <div><p class="font-display text-4xl md:text-5xl"><span class="counter" data-target="1200">0</span>+</p><p class="text-zinc-500 text-sm">Socios activos</p></div>
+        <div><p class="font-display text-4xl md:text-5xl"><span class="counter" data-target="35">0</span></p><p class="text-zinc-500 text-sm">Clases por semana</p></div>
+        <div><p class="font-display text-4xl md:text-5xl"><span class="counter" data-target="12">0</span></p><p class="text-zinc-500 text-sm">Entrenadores</p></div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- Actividades -->
+    <section class="max-w-6xl mx-auto px-4 py-20">
+      <h2 class="font-display text-4xl uppercase mb-10 reveal">Actividades</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <article class="reveal bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-lime-brand transition">
+          <i class="fa-solid fa-dumbbell text-lime-brand text-3xl"></i>
+          <h3 class="font-display text-xl uppercase mt-4">Musculación</h3>
+          <p class="text-zinc-400 text-sm mt-2">Máquinas nuevas y zona de peso libre amplia.</p>
+        </article>
+        <article class="reveal bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-lime-brand transition">
+          <i class="fa-solid fa-fire text-lime-brand text-3xl"></i>
+          <h3 class="font-display text-xl uppercase mt-4">Funcional</h3>
+          <p class="text-zinc-400 text-sm mt-2">Circuitos de alta intensidad en grupos reducidos.</p>
+        </article>
+        <article class="reveal bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-lime-brand transition">
+          <i class="fa-solid fa-person-running text-lime-brand text-3xl"></i>
+          <h3 class="font-display text-xl uppercase mt-4">Spinning</h3>
+          <p class="text-zinc-400 text-sm mt-2">Música fuerte, luces y mucha energía.</p>
+        </article>
+        <article class="reveal bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-lime-brand transition">
+          <i class="fa-solid fa-spa text-lime-brand text-3xl"></i>
+          <h3 class="font-display text-xl uppercase mt-4">Yoga</h3>
+          <p class="text-zinc-400 text-sm mt-2">Movilidad, respiración y recuperación.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Planes con toggle mensual / anual -->
+    <section id="planes" class="bg-zinc-900 border-y border-zinc-800">
+      <div class="max-w-6xl mx-auto px-4 py-20">
+        <div class="flex flex-wrap items-end justify-between gap-6 mb-10">
+          <h2 class="font-display text-4xl uppercase reveal">Planes</h2>
+          <label class="flex items-center gap-3 text-sm cursor-pointer select-none">
+            <span>Mensual</span>
+            <input id="billingToggle" type="checkbox" class="sr-only peer">
+            <span class="toggle"></span>
+            <span>Anual <span class="text-lime-brand font-semibold">-20%</span></span>
+          </label>
+        </div>
+        <div id="plans" class="grid md:grid-cols-3 gap-4"></div>
+      </div>
+    </section>
+
+    <!-- Calculadora de IMC -->
+    <section id="imc" class="max-w-6xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-10 items-center">
+      <div class="reveal">
+        <h2 class="font-display text-4xl uppercase">Calculá tu IMC</h2>
+        <p class="text-zinc-400 mt-4">El Índice de Masa Corporal es una referencia rápida. Nuestros profes hacen una evaluación completa en tu primera clase.</p>
+      </div>
+      <form id="bmiForm" class="reveal bg-zinc-900 border border-zinc-800 rounded-2xl p-6 grid gap-4">
+        <div class="grid grid-cols-2 gap-4">
+          <label class="text-sm text-zinc-400">Peso (kg)
+            <input id="weight" type="number" min="30" max="300" step="0.1" required class="input mt-1" placeholder="75">
+          </label>
+          <label class="text-sm text-zinc-400">Altura (cm)
+            <input id="height" type="number" min="100" max="250" required class="input mt-1" placeholder="175">
+          </label>
+        </div>
+        <button class="bg-lime-brand text-zinc-950 font-semibold py-3 rounded-xl hover:brightness-90">Calcular</button>
+        <div id="bmiResult" class="hidden text-center pt-2">
+          <p class="font-display text-5xl" id="bmiValue"></p>
+          <p class="font-semibold mt-1" id="bmiLabel"></p>
+        </div>
+      </form>
+    </section>
+
+    <!-- FAQ con <details>: acordeón nativo de HTML, sin JavaScript -->
+    <section id="faq" class="max-w-3xl mx-auto px-4 py-20">
+      <h2 class="font-display text-4xl uppercase mb-8 reveal">Preguntas frecuentes</h2>
+      <div class="grid gap-3">
+        <details class="faq"><summary>¿Necesito experiencia previa?</summary><p>No. Arrancamos con una evaluación y armamos una rutina según tu nivel.</p></details>
+        <details class="faq"><summary>¿Hay matrícula de inscripción?</summary><p>No cobramos matrícula. Solo pagás el plan que elijas.</p></details>
+        <details class="faq"><summary>¿Puedo congelar mi plan?</summary><p>Sí, los planes anuales se pueden congelar hasta 30 días por año.</p></details>
+        <details class="faq"><summary>¿Qué medios de pago aceptan?</summary><p>Efectivo, transferencia, débito y crédito en hasta 3 cuotas sin interés.</p></details>
+      </div>
+    </section>
+
+    <!-- Clase de prueba -->
+    <section id="prueba" class="px-4 pb-24">
+      <div class="max-w-4xl mx-auto bg-lime-brand text-zinc-950 rounded-3xl p-8 md:p-12 text-center">
+        <h2 class="font-display text-4xl md:text-5xl uppercase">Tu primera clase es gratis</h2>
+        <p class="mt-3 font-medium">Escribinos y coordinamos día y horario. Sin compromiso.</p>
+        <form id="trialForm" class="mt-8 flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
+          <input id="trialName" required placeholder="Tu nombre" class="flex-1 px-5 py-3 rounded-full bg-white/80 placeholder-zinc-500 outline-none focus:bg-white">
+          <select id="trialActivity" class="px-5 py-3 rounded-full bg-white/80 outline-none">
+            <option>Musculación</option><option>Funcional</option><option>Spinning</option><option>Yoga</option>
+          </select>
+          <button class="bg-zinc-950 text-white font-semibold px-6 py-3 rounded-full hover:bg-zinc-800">
+            <i class="fa-brands fa-whatsapp"></i> Reservar
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-zinc-800 py-8 text-center text-sm text-zinc-500">
+    © <span id="year"></span> FORJA Gym · Demo para comercios · <a href="../" class="underline hover:text-white">← Volver al portafolio</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

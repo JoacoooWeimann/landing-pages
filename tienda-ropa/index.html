@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NÓMADA | Ropa urbana</title>
+  <meta name="description" content="NÓMADA: ropa urbana de diseño local. Elegí tus prendas y hacé tu pedido por WhatsApp.">
+  <!-- Google Fonts: tipografías gratuitas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="promo-bar">Envío gratis en compras superiores a $80.000 · 3 cuotas sin interés</div>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#" class="logo">NÓMADA</a>
+      <nav class="nav">
+        <a href="#catalogo">Catálogo</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#newsletter">Novedades</a>
+      </nav>
+      <button id="cartOpen" class="cart-btn" aria-label="Abrir carrito">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span id="cartCount" class="cart-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <p class="eyebrow">Colección Primavera 2026</p>
+      <h1>Ropa para moverte<br>por la ciudad.</h1>
+      <p class="hero-text">Diseño local, telas nobles y cortes pensados para el día a día.</p>
+      <a href="#catalogo" class="btn btn-dark">Ver colección <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+  </section>
+
+  <main>
+    <section id="catalogo" class="container section">
+      <div class="section-head">
+        <h2>Catálogo</h2>
+        <!-- Los botones de filtro usan data-category para saber qué mostrar -->
+        <div id="filters" class="filters">
+          <button class="chip active" data-category="todo">Todo</button>
+          <button class="chip" data-category="remeras">Remeras</button>
+          <button class="chip" data-category="buzos">Buzos</button>
+          <button class="chip" data-category="pantalones">Pantalones</button>
+          <button class="chip" data-category="accesorios">Accesorios</button>
+        </div>
+      </div>
+      <div id="productGrid" class="product-grid"></div>
+    </section>
+
+    <section id="nosotros" class="about">
+      <div class="container about-grid">
+        <div>
+          <h2>Hecho en Argentina</h2>
+          <p>Somos un taller chico en Buenos Aires. Producimos tiradas cortas para no acumular stock y cuidar cada prenda.</p>
+        </div>
+        <ul class="perks">
+          <li><i class="fa-solid fa-truck-fast"></i> Envíos a todo el país</li>
+          <li><i class="fa-solid fa-rotate-left"></i> Cambios dentro de los 30 días</li>
+          <li><i class="fa-solid fa-credit-card"></i> Transferencia, tarjeta o efectivo</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="newsletter" class="container section newsletter">
+      <h2>Enterate primero de los lanzamientos</h2>
+      <p>Dejanos tu email y te avisamos cuando salga una colección nueva.</p>
+      <!--
+        Netlify Forms: al publicar en Netlify, detecta este form por el atributo
+        data-netlify y guarda los envíos en el panel de Netlify (sin backend propio).
+        El input oculto "form-name" es obligatorio cuando se envía con JavaScript.
+      -->
+      <form id="newsletterForm" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="newsletter-form">
+        <input type="hidden" name="form-name" value="newsletter">
+        <p hidden><label>No completar: <input name="bot-field"></label></p>
+        <input type="email" name="email" required placeholder="tu@email.com" aria-label="Email">
+        <button type="submit" class="btn btn-dark">Suscribirme</button>
+      </form>
+      <p id="newsletterMsg" class="form-msg" hidden></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> NÓMADA · Demo para comercios</p>
+      <div class="socials">
+        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      </div>
+      <a href="../">← Volver al portafolio</a>
+    </div>
+  </footer>
+
+  <!-- Carrito lateral (drawer) -->
+  <div id="overlay" class="overlay" hidden></div>
+  <aside id="cart" class="cart" aria-label="Carrito" aria-hidden="true">
+    <div class="cart-head">
+      <h3>Tu carrito</h3>
+      <button id="cartClose" class="icon-btn" aria-label="Cerrar carrito"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <ul id="cartItems" class="cart-items"></ul>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Total</span><strong id="cartTotal">$0</strong></div>
+      <button id="checkout" class="btn btn-wa"><i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp</button>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

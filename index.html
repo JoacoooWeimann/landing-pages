@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Pages para Comercios | Joaco Weimann</title>
+  <meta name="description" content="Colección de landing pages para distintos tipos de negocios, con integraciones de WhatsApp, Google Maps, Netlify Forms y más.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0f13;
+      --card: #171920;
+      --line: #2a2d38;
+      --text: #eceef4;
+      --muted: #9197a8;
+      --accent: #7c9cff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .wrap { width: min(1080px, 100% - 2rem); margin-inline: auto; padding-block: 5rem 3rem; }
+    h1, h2 { font-family: "Space Grotesk", sans-serif; line-height: 1.1; }
+    h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); margin: 0.3rem 0 1rem; }
+    .eyebrow { color: var(--accent); font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.8rem; margin: 0; }
+    .lead { color: var(--muted); max-width: 620px; font-size: 1.1rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; margin-top: 3rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .thumb { height: 140px; display: grid; place-items: center; font-size: 3rem; }
+    .body { padding: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+    .body h2 { font-size: 1.3rem; margin: 0; }
+    .body p { color: var(--muted); margin: 0; font-size: 0.92rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 0.6rem; }
+    .tag { font-size: 0.72rem; border: 1px solid var(--line); border-radius: 999px; padding: 0.15rem 0.6rem; color: var(--muted); }
+    footer { margin-top: 4rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 1.5rem; }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="eyebrow">Portafolio · Landing pages</p>
+    <h1>Sitios para comercios reales</h1>
+    <p class="lead">Cuatro landing pages para distintos rubros, cada una construida con un enfoque de estilos distinto y con integraciones que un negocio usa en el día a día: turnos y pedidos por WhatsApp, mapas, formularios y carrito de compras.</p>
+
+    <div class="grid">
+      <a class="card" href="barberia/">
+        <div class="thumb" style="background:linear-gradient(135deg,#2b2b2b,#000)">💈</div>
+        <div class="body">
+          <h2>LA TRIBU · Barbería</h2>
+          <p>Servicios con precios y reserva de turnos que arma el mensaje de WhatsApp.</p>
+          <div class="tags"><span class="tag">Bootstrap 5</span><span class="tag">WhatsApp</span><span class="tag">Google Maps</span></div>
+        </div>
+      </a>
+      <a class="card" href="tienda-ropa/">
+        <div class="thumb" style="background:linear-gradient(135deg,#f4b183,#e9d5b5)">👕</div>
+        <div class="body">
+          <h2>NÓMADA · Tienda de ropa</h2>
+          <p>Catálogo con filtros, talles, carrito persistente y pedido por WhatsApp.</p>
+          <div class="tags"><span class="tag">CSS puro</span><span class="tag">localStorage</span><span class="tag">Netlify Forms</span></div>
+        </div>
+      </a>
+      <a class="card" href="cafeteria/">
+        <div class="thumb" style="background:linear-gradient(135deg,#c07a3e,#3b2418)">☕</div>
+        <div class="body">
+          <h2>Café Aroma · Cafetería</h2>
+          <p>Menú por pestañas, estado abierto/cerrado en vivo y reservas de mesa.</p>
+          <div class="tags"><span class="tag">CSS Grid</span><span class="tag">Netlify Forms</span><span class="tag">Google Maps</span></div>
+        </div>
+      </a>
+      <a class="card" href="gimnasio/">
+        <div class="thumb" style="background:linear-gradient(135deg,#c6f432,#18181b 70%)">🏋️</div>
+        <div class="body">
+          <h2>FORJA · Gimnasio</h2>
+          <p>Planes mensual/anual, calculadora de IMC, contadores y animaciones al scrollear.</p>
+          <div class="tags"><span class="tag">Tailwind</span><span class="tag">IntersectionObserver</span><span class="tag">WhatsApp</span></div>
+        </div>
+      </a>
+    </div>
+
+    <footer>
+      Hecho por Joaco Weimann · <a href="https://github.com/JoacoooWeimann" target="_blank" rel="noopener">GitHub</a>
+    </footer>
+  </main>
+</body>
+</html>
