@@ -1,5 +1,7 @@
 # Landing Pages para Comercios
 
+🔗 **Demo:** https://weimann-landing.netlify.app/
+
 Colección de 4 landing pages para distintos rubros, pensadas como demos para ofrecer a negocios reales. Cada una usa un **enfoque de estilos distinto** para practicar (y mostrar en el portafolio) varias formas de trabajar.
 
 | Proyecto | Rubro | Estilos | Integraciones |
