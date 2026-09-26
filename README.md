@@ -7,7 +7,9 @@ Colección de 4 landing pages para distintos rubros, pensadas como demos para of
 | [`barberia/`](barberia/) | Barbería | Bootstrap 5 | Turnos por WhatsApp, Google Maps, botón flotante |
 | [`tienda-ropa/`](tienda-ropa/) | Tienda de ropa | CSS puro | Carrito con `localStorage`, pedido por WhatsApp, Netlify Forms (con `fetch`) |
 | [`cafeteria/`](cafeteria/) | Cafetería | CSS puro + Grid | Netlify Forms (sin JS), Google Maps, estado abierto/cerrado |
-| [`gimnasio/`](gimnasio/) | Gimnasio | Tailwind CSS | Calculadora de IMC, planes mensual/anual, animaciones al scrollear |
+| [`gimnasio/`](gimnasio/) | Gimnasio | Tailwind CSS ([guía](gimnasio/TAILWIND.md)) | Calculadora de IMC, planes mensual/anual, animaciones al scrollear |
+
+Todas usan **JavaScript con módulos** (`import` / `export`). Ver la [sección 3](#3-módulos-de-javascript-import--export).
 
 Cada carpeta tiene su propio `README.md` que explica su código en detalle.
 
@@ -33,14 +35,19 @@ landing-page/
 ├── netlify.toml      ← Configuración para publicar en Netlify
 ├── .gitignore        ← Archivos que Git debe ignorar
 ├── README.md         ← Este archivo
+├── shared/
+│   └── js/utils.js   ← Funciones que usan TODAS las landings (precio, WhatsApp, fecha)
 ├── barberia/
 │   ├── index.html    ← Estructura (contenido)
 │   ├── styles.css    ← Presentación (cómo se ve)
-│   ├── app.js        ← Comportamiento (qué hace)
+│   ├── js/           ← Comportamiento (qué hace), dividido en módulos
+│   │   ├── main.js   ← Punto de entrada: el único que carga el HTML
+│   │   ├── config.js ← Datos del negocio
+│   │   └── ...       ← Un archivo por funcionalidad
 │   └── README.md
 ├── tienda-ropa/      (misma estructura)
 ├── cafeteria/        (+ gracias.html, página post-formulario)
-└── gimnasio/
+└── gimnasio/         (+ TAILWIND.md, guía de Tailwind)
 ```
 
 ### Por qué separar HTML, CSS y JS
@@ -59,10 +66,84 @@ Cuando visitás `misitio.com/barberia/`, el servidor busca automáticamente el a
 
 ---
 
-## 3. Conceptos que se repiten en todos los proyectos
+## 3. Módulos de JavaScript (`import` / `export`)
+
+### El problema que resuelven
+Con un solo `app.js` de 200 líneas todo está mezclado: datos, dibujo del HTML, eventos, localStorage... Y si querés usar la misma función (por ejemplo `formatPrice`) en otra página, tenés que copiarla y pegarla: si después encontrás un bug, lo tenés que arreglar en 4 lugares.
+
+Con módulos, **cada archivo tiene una responsabilidad** y comparte solo lo que decide compartir.
+
+### Cómo se usan
+
+**1. Exportar** (hacer algo visible para otros archivos):
+
+```js
+// shared/js/utils.js
+export function formatPrice(value) { ... }   // exportado: se puede importar
+function helperPrivado() { ... }              // NO exportado: solo existe en este archivo
+```
+
+**2. Importar** (traer lo que otro archivo exportó):
+
+```js
+// barberia/js/services.js
+import { formatPrice } from "../../shared/js/utils.js";
+import { SERVICES } from "./config.js";
+```
+
+- La ruta es **relativa al archivo que importa**: `./` = misma carpeta, `../` = subir una carpeta.
+- Hay que poner la extensión `.js` (en el navegador es obligatoria).
+- Las llaves `{ }` indican qué cosas traer por nombre.
+
+**3. Importar todo junto** con un "apodo":
+
+```js
+import * as cart from "./cart.js";
+cart.addItem(3, "L");   // todo lo exportado queda dentro del objeto "cart"
+cart.getTotal();
+```
+
+**4. Cargarlo en el HTML** con `type="module"`, y **solo el punto de entrada**:
+
+```html
+<script type="module" src="js/main.js"></script>
+```
+
+`main.js` importa el resto, y el navegador va descargando cada archivo según lo necesita.
+
+### Qué cambia al usar `type="module"`
+
+| | Script clásico | Módulo |
+|---|---|---|
+| Variables de nivel superior | Quedan **globales** (en `window`) y pueden chocar entre archivos | **Privadas** del archivo |
+| Cuándo se ejecuta | Apenas se lee (por eso iba al final del `<body>`) | Cuando el HTML terminó de cargar (como `defer`) |
+| `import` / `export` | ❌ | ✅ |
+| Abrir con doble clic (`file://`) | ✅ Funciona | ❌ **No funciona**: el navegador lo bloquea por seguridad (CORS) |
+
+> ⚠️ **Por eso ahora hace falta un servidor local** para ver las páginas (ver sección 5). Si abrís el HTML con doble clic, la página se ve pero nada del JS funciona, y en la consola (F12) aparece un error de CORS.
+
+### Cómo están organizados los módulos
+
+Todas las landings siguen el mismo patrón:
+
+- **`config.js`**: datos y configuración del negocio (número, productos, precios). Solo `export const`.
+- **Un módulo por funcionalidad** (`booking.js`, `cart.js`, `menu.js`, `bmi.js`...). Cada uno:
+  - busca **sus propios** elementos del DOM (privados),
+  - exporta una función `initAlgo()` que lo activa.
+- **`main.js`**: importa todo y llama a los `init` en orden. Leyéndolo entendés qué hace la página sin ver detalles.
+- **`shared/js/utils.js`**: lo que usan varias landings.
+
+Separar **datos**, **lógica** y **presentación** (por ejemplo, en la tienda: `cart.js` solo maneja datos, `render.js` solo dibuja) es la base de cómo funcionan React, Vue y el backend con Node.
+
+### Conexión con Node
+Node usa exactamente la misma sintaxis (`import` / `export`), así que lo que practicás acá lo vas a usar tal cual en el backend. (En Node también existe la sintaxis vieja, `require()` / `module.exports`, que vas a ver en tutoriales más antiguos).
+
+---
+
+## 4. Conceptos que se repiten en todos los proyectos
 
 ### Datos separados del HTML
-En vez de escribir cada servicio/producto a mano en el HTML, están en un **array de objetos** en `app.js`:
+En vez de escribir cada servicio/producto a mano en el HTML, están en un **array de objetos** en `js/config.js`:
 
 ```js
 const SERVICES = [
@@ -74,10 +155,10 @@ const SERVICES = [
 Y una función los convierte en HTML con `.map()` + template strings. **Ventaja:** para cambiar un precio o agregar un producto se toca una sola línea, y el formulario, la lista y el carrito se actualizan solos. Así funcionan también React, Vue, etc., así que es buena práctica para lo que viene.
 
 ### Objeto `CONFIG`
-Arriba de cada `app.js` hay un objeto con lo que cambia de cliente a cliente (número de WhatsApp, horarios). `Object.freeze()` impide modificarlo por error durante la ejecución.
+En cada `js/config.js` hay un objeto con lo que cambia de cliente a cliente (número de WhatsApp, horarios). `Object.freeze()` impide modificarlo por error durante la ejecución.
 
-### Objeto `DOM`
-Todas las referencias a elementos (`document.getElementById(...)`) se buscan **una sola vez** al inicio y se guardan en un objeto. Es más ordenado y más rápido que buscarlas cada vez.
+### Referencias al DOM al inicio de cada módulo
+Cada módulo busca sus elementos (`document.getElementById(...)`) **una sola vez**, arriba de todo, y los guarda en constantes. Es más ordenado y más rápido que buscarlos cada vez que se usan.
 
 ### Integración con WhatsApp (sin API)
 WhatsApp permite abrir un chat con un mensaje prearmado usando un simple link:
@@ -90,7 +171,9 @@ https://wa.me/5491112345678?text=Hola%20quiero%20un%20turno
 - El texto se codifica con `encodeURIComponent()` para que espacios, tildes y saltos de línea viajen bien en la URL.
 - `*texto*` se ve en **negrita** dentro de WhatsApp.
 
-> ⚠️ Todos los proyectos usan un número de ejemplo (`5491112345678`). Cambialo en el `CONFIG` de cada `app.js`.
+> ⚠️ Todos los proyectos usan un número de ejemplo (`5491112345678`). Cambialo en el `CONFIG` de cada `js/config.js`.
+
+Las funciones `buildWhatsAppUrl()` y `openWhatsApp()` están en `shared/js/utils.js` y las usan las 4 landings.
 
 ### Google Maps embebido (sin API key)
 Un `<iframe>` con esta URL muestra un mapa sin registrarse en Google:
@@ -130,9 +213,9 @@ Bootstrap, Tailwind, Font Awesome y Google Fonts se cargan desde un **CDN** (*Co
 
 ---
 
-## 4. Cómo verlo en tu compu
+## 5. Cómo verlo en tu compu
 
-Abrir el `index.html` con doble clic funciona casi todo, pero lo ideal es usar un servidor local (así las rutas funcionan igual que en internet):
+Como usamos módulos, **hace falta un servidor local** (abrir con doble clic no funciona, ver sección 3):
 
 ```bash
 cd landing-page
@@ -144,7 +227,7 @@ O en VS Code, la extensión **Live Server** (clic derecho → "Open with Live Se
 
 ---
 
-## 5. Git y GitHub
+## 6. Git y GitHub
 
 ```bash
 git init                      # convierte la carpeta en un repositorio
@@ -168,7 +251,7 @@ git push
 
 ---
 
-## 6. Publicar en Netlify
+## 7. Publicar en Netlify
 
 **Opción recomendada: conectar GitHub (deploy continuo)**
 
@@ -187,11 +270,12 @@ Archivo de configuración que Netlify lee al publicar. Define qué carpeta publi
 
 ---
 
-## 7. Ideas para seguir practicando
+## 8. Ideas para seguir practicando
 
 - [ ] Reemplazar los íconos por fotos reales (carpeta `img/`, formato `.webp`, atributo `loading="lazy"`).
 - [ ] Agregar una sección de reseñas con un carrusel.
 - [ ] Modo claro/oscuro con un botón en alguna página.
 - [ ] Pasar el catálogo de la tienda a un archivo `productos.json` y cargarlo con `fetch()`.
+- [ ] Mover más funciones repetidas a `shared/js/` (por ejemplo, el toast o la validación de fechas).
 - [ ] Nuevos rubros: veterinaria, estudio de tatuajes, inmobiliaria, consultorio.
 - [ ] Medir la página con **Lighthouse** (F12 → pestaña Lighthouse) y mejorar el puntaje.

@@ -5,10 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FORJA Gym | Entrená en serio</title>
   <meta name="description" content="FORJA Gym: musculación, funcional y clases grupales. Pedí tu clase de prueba gratis.">
-  <!-- Tailwind por CDN: ideal para prototipos. En producción se usa compilado con npm -->
+  <!--
+    TAILWIND CSS (guía completa en TAILWIND.md)
+    Este script lee las clases que usás en el HTML (ej: "px-4", "bg-zinc-950")
+    y genera el CSS de cada una en el momento. Ideal para aprender y prototipar;
+    en un proyecto profesional se instala con npm y se compila una sola vez.
+  -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Configuración de Tailwind: agregamos colores y fuentes propias
+    // Configuración: "extend" SUMA opciones a las que Tailwind ya trae.
+    // - colors.lime.brand  -> habilita bg-lime-brand, text-lime-brand, border-lime-brand...
+    // - fontFamily.display -> habilita la clase font-display (Oswald para títulos)
     tailwind.config = {
       theme: {
         extend: {
@@ -24,12 +31,26 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
+<!--
+  bg-zinc-950   fondo casi negro (zinc = gama de grises; 50 es el más claro, 950 el más oscuro)
+  text-zinc-100 texto casi blanco
+  font-[Inter]  valor "arbitrario" entre corchetes: font-family: Inter
+  antialiased   suaviza la tipografía
+-->
 <body class="bg-zinc-950 text-zinc-100 font-[Inter] antialiased">
 
-  <!-- Navbar -->
+  <!--
+    Navbar
+    sticky top-0 z-50      -> queda pegado arriba al scrollear, por encima del resto
+    bg-zinc-950/80         -> fondo con 80 % de opacidad (el "/80")
+    backdrop-blur          -> desenfoca lo que pasa por detrás
+    border-b border-zinc-800 -> borde solo abajo (b = bottom), gris oscuro
+  -->
   <header class="sticky top-0 z-50 bg-zinc-950/80 backdrop-blur border-b border-zinc-800">
+    <!-- Equivale al .container de Bootstrap: ancho máximo, centrado (mx-auto) y padding lateral -->
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
       <a href="#" class="font-display text-2xl tracking-wide">FORJA<span class="text-lime-brand">.</span></a>
+      <!-- MOBILE FIRST: "hidden" oculta en celular; "md:flex" lo muestra desde 768px -->
       <nav class="hidden md:flex gap-8 text-sm text-zinc-400">
         <a href="#planes" class="hover:text-white">Planes</a>
         <a href="#imc" class="hover:text-white">Calculadora</a>
@@ -43,6 +64,7 @@
   <section class="hero relative overflow-hidden">
     <div class="max-w-6xl mx-auto px-4 py-24 md:py-32">
       <p class="text-lime-brand font-semibold uppercase tracking-[0.2em] text-sm mb-4">Abierto 24/7</p>
+      <!-- text-5xl en celular, text-7xl desde tablet. leading-none = line-height: 1 -->
       <h1 class="font-display text-5xl md:text-7xl uppercase leading-none max-w-3xl">Tu mejor versión<br>se <span class="text-lime-brand">forja</span> acá.</h1>
       <p class="text-zinc-400 text-lg mt-6 max-w-xl">Musculación, funcional y clases grupales con profes que te acompañan de verdad. Tu primera clase va por nuestra cuenta.</p>
       <div class="flex flex-wrap gap-4 mt-10">
@@ -63,7 +85,12 @@
     <!-- Actividades -->
     <section class="max-w-6xl mx-auto px-4 py-20">
       <h2 class="font-display text-4xl uppercase mb-10 reveal">Actividades</h2>
+      <!-- Grilla responsive: 1 columna en celular, 2 desde 640px (sm), 4 desde 1024px (lg).
+           En Bootstrap sería: row > col-sm-6 col-lg-3 -->
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Tarjeta: fondo, borde, esquinas redondeadas (rounded-2xl), padding (p-6).
+             hover:border-lime-brand cambia el borde al pasar el mouse; transition lo anima.
+             "reveal" NO es de Tailwind: es una clase propia (styles.css) para la animación de scroll -->
         <article class="reveal bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-lime-brand transition">
           <i class="fa-solid fa-dumbbell text-lime-brand text-3xl"></i>
           <h3 class="font-display text-xl uppercase mt-4">Musculación</h3>
@@ -94,11 +121,14 @@
           <h2 class="font-display text-4xl uppercase reveal">Planes</h2>
           <label class="flex items-center gap-3 text-sm cursor-pointer select-none">
             <span>Mensual</span>
+            <!-- sr-only: oculto a la vista pero accesible para lectores de pantalla y teclado.
+                 peer: permite que el elemento siguiente reaccione a su estado (ver styles.css) -->
             <input id="billingToggle" type="checkbox" class="sr-only peer">
             <span class="toggle"></span>
             <span>Anual <span class="text-lime-brand font-semibold">-20%</span></span>
           </label>
         </div>
+        <!-- Las tarjetas se generan desde js/plans.js -->
         <div id="plans" class="grid md:grid-cols-3 gap-4"></div>
       </div>
     </section>
@@ -142,6 +172,7 @@
       <div class="max-w-4xl mx-auto bg-lime-brand text-zinc-950 rounded-3xl p-8 md:p-12 text-center">
         <h2 class="font-display text-4xl md:text-5xl uppercase">Tu primera clase es gratis</h2>
         <p class="mt-3 font-medium">Escribinos y coordinamos día y horario. Sin compromiso.</p>
+        <!-- flex-col en celular (uno abajo del otro), sm:flex-row desde 640px (en fila) -->
         <form id="trialForm" class="mt-8 flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
           <input id="trialName" required placeholder="Tu nombre" class="flex-1 px-5 py-3 rounded-full bg-white/80 placeholder-zinc-500 outline-none focus:bg-white">
           <select id="trialActivity" class="px-5 py-3 rounded-full bg-white/80 outline-none">
@@ -159,6 +190,7 @@
     © <span id="year"></span> FORJA Gym · Demo para comercios · <a href="../" class="underline hover:text-white">← Volver al portafolio</a>
   </footer>
 
-  <script src="app.js"></script>
+  <!-- type="module" activa import/export (necesita servidor local, ver README) -->
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

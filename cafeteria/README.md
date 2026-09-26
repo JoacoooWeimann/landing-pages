@@ -11,7 +11,10 @@ Landing para una cafetería con **menú por pestañas**, cartel de **abierto/cer
 | `index.html` | Estructura: header con estado, hero, menú, beneficios, formulario de reserva, mapa y datos. |
 | `gracias.html` | Página a la que Netlify redirige después de enviar la reserva. |
 | `styles.css` | Diseño cálido, tipografía serif en títulos, grillas y versión móvil. |
-| `app.js` | Genera las pestañas y el menú, calcula si está abierto, limita la fecha de reserva. |
+| `js/main.js` | Punto de entrada: arranca el menú y el estado, y limita la fecha de reserva. |
+| `js/config.js` | Número de WhatsApp, horarios por día y el menú completo. |
+| `js/menu.js` | Pestañas y lista de platos. |
+| `js/status.js` | Cartel "Abierto / Cerrado". |
 
 ## Formulario con Netlify Forms (sin JavaScript)
 
@@ -26,10 +29,19 @@ Landing para una cafetería con **menú por pestañas**, cartel de **abierto/cer
 
 Comparalo con la **tienda de ropa**, que envía su formulario con `fetch` y no cambia de página.
 
-## Cómo funciona `app.js`
+## Cómo funciona el JavaScript (módulos)
 
-### Menú con pestañas
-`MENU` es un **objeto** cuyas claves son las categorías:
+```
+main.js ──► config.js
+   ├──────► menu.js   ──► config.js, shared/utils.js
+   ├──────► status.js ──► config.js
+   └──────► shared/utils.js
+```
+
+El formulario de reservas **no tiene módulo** porque no necesita JS: lo maneja Netlify.
+
+### Menú con pestañas (`menu.js`)
+`MENU` (en `config.js`) es un **objeto** cuyas claves son las categorías:
 
 ```js
 const MENU = {
@@ -41,14 +53,16 @@ const MENU = {
 - `Object.keys(MENU)` devuelve `["Cafetería", "Pastelería", "Brunch"]` → con eso se crean las pestañas. Agregar una categoría nueva al objeto agrega una pestaña sola.
 - La pestaña activa se marca con `aria-selected="true"`, y el CSS la estiliza con el selector `.tab[aria-selected="true"]`. Así el mismo atributo sirve para accesibilidad **y** para el diseño.
 
-### Abierto / Cerrado
+### Abierto / Cerrado (`status.js`)
 ```js
 const [open, close] = CONFIG.hours[now.getDay()];   // desestructuración de arrays
 const hour = now.getHours() + now.getMinutes() / 60; // 14:30 → 14.5
 const isOpen = hour >= open && hour < close;
 ```
 
-`setInterval(updateOpenStatus, 60 * 1000)` lo recalcula cada minuto por si alguien deja la página abierta a la hora de cierre.
+La lógica está en `isOpenAt(date)`, una **función pura**: recibe una fecha y devuelve un resultado, sin tocar el DOM. Está exportada para poder reutilizarla o probarla por separado, por ejemplo desde la consola o, más adelante, con tests: `isOpenAt(new Date("2026-09-27T22:00"))`.
+
+`setInterval(update, 60 * 1000)` lo recalcula cada minuto por si alguien deja la página abierta a la hora de cierre.
 
 ## CSS: detalles interesantes
 

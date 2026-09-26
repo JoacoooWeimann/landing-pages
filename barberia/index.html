@@ -49,7 +49,7 @@
 
   <main class="container my-5 flex-grow-1">
 
-    <!-- Servicios: se generan desde app.js (ver array SERVICES) -->
+    <!-- Servicios: se generan desde js/services.js (datos en js/config.js) -->
     <section id="servicios" class="mb-5 pb-4">
       <div class="text-center mb-4">
         <h2 class="fw-bold text-white mb-1">Nuestros Servicios</h2>
@@ -141,7 +141,12 @@
     <i class="fa-brands fa-whatsapp"></i>
   </a>
 
-  <!-- JS al final del body: así el HTML ya existe cuando se ejecuta -->
-  <script src="app.js"></script>
+  <!--
+    type="module" activa import/export. Los módulos:
+    - se ejecutan cuando el HTML ya terminó de cargar (como "defer")
+    - tienen su propio alcance: sus variables no quedan globales
+    - NO funcionan abriendo el archivo con doble clic (file://): hace falta un servidor local
+  -->
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>
